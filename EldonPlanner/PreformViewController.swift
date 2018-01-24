@@ -15,6 +15,7 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var showTime: UITextField!
     @IBOutlet weak var rigDownTime: UITextField!
     @IBOutlet weak var lineUpPlacement: UITextField!
+    @IBOutlet weak var addAnotherButton: UIButton!
     
     var event: Event? = nil
     
@@ -49,8 +50,11 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         if (preformenceName.text?.isEmpty)! || (soundcheckTime.text?.isEmpty)! || (rigUpTime.text?.isEmpty)! || (showTime.text?.isEmpty)! || (rigDownTime.text?.isEmpty)! || (lineUpPlacement.text?.isEmpty)! {
             alertIfAnyInputFieldIsEmpty()
         } else {
+            if lineUpPlacementData.count == 2 {
+                addAnotherButton.setTitle("Done", for: [])
+            }
             if lineUpPlacementData.count == 1 {
-                
+                self.performSegue(withIdentifier: "toEventInfo", sender: sender)
             }
             addPreformersInfoToPreformenceArray()
             removeSelectedLineUpPlacementFromArray()
@@ -161,8 +165,6 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEventInfo" {
             let destVC = segue.destination as! EventInfoViewController
-            
-//            totalShowTimeInMinForPreformers()
             addPreformersInfoToPreformenceArray()
             destVC.event = event
         }

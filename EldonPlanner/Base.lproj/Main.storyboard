@@ -308,6 +308,7 @@
                         <viewLayoutGuide key="safeArea" id="FIH-Pl-Lko"/>
                     </view>
                     <connections>
+                        <outlet property="addAnotherButton" destination="tTZ-Wu-T92" id="UbU-ph-geK"/>
                         <outlet property="lineUpPlacement" destination="hrB-dE-6XP" id="2pz-wf-Tze"/>
                         <outlet property="preformenceName" destination="NOO-ph-reC" id="fpI-gY-845"/>
                         <outlet property="rigDownTime" destination="xJH-WD-xRY" id="6V4-6V-qSR"/>
