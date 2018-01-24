@@ -24,6 +24,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let testDate = Date()
+        
     }
     @IBAction func nextButtonPressed(_ sender: UIBarButtonItem) {
         if (dateBox.text?.isEmpty)! || (getInBox.text?.isEmpty)! || (dinnerBox.text?.isEmpty)! || (doorsBox.text?.isEmpty)! || (musicCurfewBox.text?.isEmpty)! || (venueCurfewBox.text?.isEmpty)!{
@@ -38,31 +40,31 @@ class ViewController: UIViewController {
     
     @IBAction func getInBoxBeganEdit(_ sender: UITextField) {
         activeTimeTextField = sender
-        timeForTimeWheel = "15:00"
+        timeForTimeWheel = "14:00"
         timeBoxBeganEdit()
     }
     
     @IBAction func dinnerBoxBeganEdit(_ sender: UITextField) {
         activeTimeTextField = sender
-        timeForTimeWheel = "18:00"
+        timeForTimeWheel = "17:00"
         timeBoxBeganEdit()
     }
     
     @IBAction func doorsBoxBeganEdit(_ sender: UITextField) {
         activeTimeTextField = sender
-        timeForTimeWheel = "19:00"
+        timeForTimeWheel = "20:00"
         timeBoxBeganEdit()
     }
     
     @IBAction func musicCurfewBoxBeganEdit(_ sender: UITextField) {
         activeTimeTextField = sender
-        timeForTimeWheel = "22:00"
+        timeForTimeWheel = "23:00"
         timeBoxBeganEdit()
     }
     
     @IBAction func venueCurfewBoxBeganEdit(_ sender: UITextField) {
         activeTimeTextField = sender
-        timeForTimeWheel = "00:00"
+        timeForTimeWheel = "01:00"
         timeBoxBeganEdit()
         
     }

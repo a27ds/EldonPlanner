@@ -30,6 +30,26 @@ class Event {
         self.howManyPreformers = howManyPreformers
         self.showTimeTotalInMin = 0
         self.soundcheckTimeTotalInMin = 0
+        getTotalTime()
     }
     
+    func getTotalTime() {
+        showTimeTotalInMin = calculateTimeDifference(start: doors, end: musicCurfew)
+        soundcheckTimeTotalInMin = calculateTimeDifference(start: getIn, end: dinner)
+    }
+    
+    func calculateTimeDifference(start: String, end: String) -> Int {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        let sixOClock = formatter.date(from: "06:00")
+        let startString = "\(start)"
+        let endString = "\(end)"
+        let startDate = formatter.date(from: startString)!
+        var endDate = formatter.date(from: endString)!
+        if sixOClock! > endDate {
+            endDate = Calendar.current.date(byAdding: .day, value: 1, to: endDate)!
+        }
+        let difference = endDate.timeIntervalSince(startDate)
+        return Int(difference) / 60
+    }
 }

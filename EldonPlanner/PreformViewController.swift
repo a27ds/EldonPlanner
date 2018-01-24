@@ -30,40 +30,6 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         for i in 1...event!.howManyPreformers {
             lineUpPlacementData.append("\(i)")
         }
-        print(calculateTimeDifference(start: (event?.doors)!, end: (event?.musicCurfew)!))
-    }
-    
-    func removeMinFromPreformTimings() { // Remove " min" from preformer
-        for preformer in event!.preformers {
-            preformer.rigUpTime = String(preformer.rigUpTime.dropLast(4))
-            preformer.showTime = String(preformer.showTime.dropLast(4))
-            preformer.rigDownTime = String(preformer.rigDownTime.dropLast(4))
-        }
-    }
-        
-    func totalShowTimeInMinForPreformers() {
-        for preformer in event!.preformers {
-            let lineUpPlacementInt: Int = Int(preformer.lineUpPlacement)!
-            if lineUpPlacementInt == event?.howManyPreformers{ //Last Preformer
-                preformer.preformerTotalTimeInMin = Int(preformer.showTime)! + Int(preformer.rigUpTime)!
-            } else if lineUpPlacementInt == 1 { // First Preformer
-                preformer.preformerTotalTimeInMin = Int(preformer.rigDownTime)! + Int(preformer.showTime)!
-            } else { // Middle Preformer
-                preformer.preformerTotalTimeInMin = Int(preformer.rigDownTime)! + Int(preformer.showTime)! + Int(preformer.rigUpTime)!
-            }
-            print(preformer.preformerTotalTimeInMin)
-        }
-    }
-
-    func calculateTimeDifference(start: String, end: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        let startString = "\(start)"
-        let endString = "\(end)"
-        let startDate = formatter.date(from: startString)!
-        let endDate = formatter.date(from: endString)!
-        let difference = endDate.timeIntervalSince(startDate)
-        return "\(Int(difference) / 3600):\(Int(difference) % 3600 / 60)"
     }
     
     override func didReceiveMemoryWarning() {
@@ -83,9 +49,10 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         if (preformenceName.text?.isEmpty)! || (soundcheckTime.text?.isEmpty)! || (rigUpTime.text?.isEmpty)! || (showTime.text?.isEmpty)! || (rigDownTime.text?.isEmpty)! || (lineUpPlacement.text?.isEmpty)! {
             alertIfAnyInputFieldIsEmpty()
         } else {
+            if lineUpPlacementData.count == 1 {
+                
+            }
             addPreformersInfoToPreformenceArray()
-//            removeMinFromPreformTimings()
-//            totalShowTimeInMinForPreformers()
             removeSelectedLineUpPlacementFromArray()
             resetInputBoxes()
         }
@@ -143,7 +110,7 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func addPreformersInfoToPreformenceArray() {
-        event?.preformers.append(Preformence(preformenceName: preformenceName.text!, soundcheckTime: soundcheckTime.text!, rigUpTime: rigUpTime.text!, showTime: showTime.text!, rigDownTime: rigDownTime.text!, lineUpPlacement: lineUpPlacement.text!))
+        event?.preformers.append(Preformence(preformenceName: preformenceName.text!, soundcheckTime: soundcheckTime.text!, rigUpTime: rigUpTime.text!, showTime: showTime.text!, rigDownTime: rigDownTime.text!, lineUpPlacement: lineUpPlacement.text!, howManyPreformers: (event?.howManyPreformers)!))
     }
     
     func resetInputBoxes() {
@@ -194,8 +161,8 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEventInfo" {
             let destVC = segue.destination as! EventInfoViewController
-            removeMinFromPreformTimings()
-            totalShowTimeInMinForPreformers()
+            
+//            totalShowTimeInMinForPreformers()
             addPreformersInfoToPreformenceArray()
             destVC.event = event
         }
