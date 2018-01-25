@@ -24,9 +24,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let testDate = Date()
-        
     }
+    
     @IBAction func nextButtonPressed(_ sender: UIBarButtonItem) {
         if (dateBox.text?.isEmpty)! || (getInBox.text?.isEmpty)! || (dinnerBox.text?.isEmpty)! || (doorsBox.text?.isEmpty)! || (musicCurfewBox.text?.isEmpty)! || (venueCurfewBox.text?.isEmpty)!{
             alertIfAnyInputFieldIsEmpty()
@@ -34,6 +33,7 @@ class ViewController: UIViewController {
             self.performSegue(withIdentifier: "toAddPreformers", sender: sender)
         }
     }
+    
     @IBAction func dateBoxBeganEdit(_ sender: UITextField) {
         dateBoxBeganEdit()
     }
@@ -66,7 +66,6 @@ class ViewController: UIViewController {
         activeTimeTextField = sender
         timeForTimeWheel = "01:00"
         timeBoxBeganEdit()
-        
     }
     
     func dateBoxBeganEdit () {

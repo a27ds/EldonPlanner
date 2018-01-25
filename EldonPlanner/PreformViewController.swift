@@ -21,15 +21,53 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     var activeCountDownTimerTextField: UITextField!
     
-    let pickerData = ["5 min", "10 min", "15 min", "20 min", "25 min", "30 min", "35 min", "40 min", "45 min", "50 min", "55 min", "60 min", "65 min", "70 min", "75 min", "80 min", "85 min", "90 min", "95 min", "100 min", "105 min", "110 min", "115 min", "120 min", "125 min", "130 min", "135 min", "140 min", "145 min", "150 min", "155 min", "160 min", "165 min", "170 min", "175 min", "180 min", "185 min", "190 min", "195 min", "200 min", ]
-    
+    var showTimePickerData: [String] = []
+    var soundcheckTimePickerData: [String] = []
     var lineUpPlacementData: [String] = []
+    var everyFiveMinInTotalShowTime: Int = 0
+    var everyFiveMinInTotalSoundcheckTime: Int = 0
+    
+    var soundcheckEdit: Bool = false
+    var soundcheckTimeSave: Int = 0
+    var rigUpEdit: Bool = false
+    var rigUpTimeSave: Int = 0
+    var showTimeEdit: Bool = false
+    var showTimeSave: Int = 0
+    var rigDownEdit: Bool = false
+    var rigDownTimeSave: Int = 0
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         for i in 1...event!.howManyPreformers {
             lineUpPlacementData.append("\(i)")
+        }
+        showTimeEveryFiveMinInTotal()
+        soundcheckTimeEveryFiveMinInTotal()
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    func showTimeEveryFiveMinInTotal() {
+        everyFiveMinInTotalShowTime = (event?.showTimeTotalInMin)! / 5
+        appendTimeInPickerData(runs: everyFiveMinInTotalShowTime, array: &showTimePickerData)
+    }
+    
+    func soundcheckTimeEveryFiveMinInTotal() {
+        everyFiveMinInTotalSoundcheckTime = (event?.soundcheckTimeTotalInMin)! / 5
+        appendTimeInPickerData(runs: everyFiveMinInTotalSoundcheckTime, array: &soundcheckTimePickerData)
+    }
+    
+    func appendTimeInPickerData(runs: Int, array: inout [String]) {
+        array.removeAll()
+        for i in 1...runs {
+                array.append("\(i * 5) min")
         }
     }
     
@@ -63,23 +101,67 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     @IBAction func soundcheckTimeBeganEdit(_ sender: UITextField) {
+        if soundcheckEdit == true {
+            event?.soundcheckTimeTotalInMin += soundcheckTimeSave
+        }
+        soundcheckEdit = false
         activeCountDownTimerTextField = sender
+        soundcheckTimeEveryFiveMinInTotal()
         countDownTimerBoxBeganEdit()
+    }
+    @IBAction func soundcheckTimeEndEdit(_ sender: UITextField) {
+        soundcheckEdit = true
+        soundcheckTimeSave = Int((sender.text!).dropLast(4))!
+        event?.soundcheckTimeTotalInMin = removeMinFromTotalTime(sender: sender, timeTotalMin: (event?.soundcheckTimeTotalInMin)!)
     }
     
     @IBAction func rigUpTimeBeganEdit(_ sender: UITextField) {
+        if rigUpEdit == true {
+            event?.showTimeTotalInMin += rigUpTimeSave
+        }
+        rigUpEdit = false
         activeCountDownTimerTextField = sender
+        showTimeEveryFiveMinInTotal()
         countDownTimerBoxBeganEdit()
     }
+    @IBAction func rigUpTimeEndEdit(_ sender: UITextField) {
+        rigUpEdit = true
+        rigUpTimeSave = Int((sender.text!).dropLast(4))!
+        event?.showTimeTotalInMin = removeMinFromTotalTime(sender: sender, timeTotalMin: (event?.showTimeTotalInMin)!)
+    }
+    
+    
     
     @IBAction func showTimeBeganEdit(_ sender: UITextField) {
+        if showTimeEdit == true {
+            event?.showTimeTotalInMin += showTimeSave
+        }
+        showTimeEdit = false
         activeCountDownTimerTextField = sender
+        showTimeEveryFiveMinInTotal()
         countDownTimerBoxBeganEdit()
+    }
+    @IBAction func showtimeEndEdit(_ sender: UITextField) {
+        showTimeEdit = true
+        showTimeSave = Int((sender.text!).dropLast(4))!
+        event?.showTimeTotalInMin = removeMinFromTotalTime(sender: sender, timeTotalMin: (event?.showTimeTotalInMin)!)
+        
     }
     
     @IBAction func rigDownTimeBeganEdit(_ sender: UITextField) {
+        if rigDownEdit == true {
+            event?.showTimeTotalInMin += rigDownTimeSave
+        }
+        rigDownEdit = false
         activeCountDownTimerTextField = sender
+        showTimeEveryFiveMinInTotal()
         countDownTimerBoxBeganEdit()
+    }
+    @IBAction func rigDownEndEdit(_ sender: UITextField) {
+        rigDownEdit = true
+        rigDownTimeSave = Int((sender.text!).dropLast(4))!
+        event?.showTimeTotalInMin = removeMinFromTotalTime(sender: sender, timeTotalMin: (event?.showTimeTotalInMin)!)
+        
     }
     
     @IBAction func lineUpPlacementBeganEdit(_ sender: UITextField) {
@@ -118,12 +200,20 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func resetInputBoxes() {
+        soundcheckEdit = false
+        rigUpEdit = false
+        showTimeEdit = false
+        rigDownEdit = false
         preformenceName.text = nil
         soundcheckTime.text = nil
         rigUpTime.text = nil
         showTime.text = nil
         rigDownTime.text = nil
         lineUpPlacement.text = nil
+    }
+    
+    func removeMinFromTotalTime(sender: UITextField, timeTotalMin: Int) -> Int{
+        return timeTotalMin - Int((sender.text!).dropLast(4))!
     }
     
     func removeSelectedLineUpPlacementFromArray() {
@@ -138,7 +228,7 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == 1 {
-            return pickerData.count
+            return showTimePickerData.count
         } else if pickerView.tag == 2 {
             return lineUpPlacementData.count
         }
@@ -147,7 +237,7 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView.tag == 1 {
-            return pickerData[row]
+            return showTimePickerData[row]
         } else if pickerView.tag == 2 {
             return lineUpPlacementData[row]
         }
@@ -156,7 +246,7 @@ class PreformViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == 1 {
-            activeCountDownTimerTextField.text = pickerData[row]
+            activeCountDownTimerTextField.text = showTimePickerData[row]
         } else if pickerView.tag == 2 {
             lineUpPlacement.text = lineUpPlacementData[row]
         }

@@ -233,6 +233,7 @@
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="rigUpTimeBeganEdit:" destination="p07-kV-cQn" eventType="editingDidBegin" id="uEv-gF-cRB"/>
+                                    <action selector="rigUpTimeEndEdit:" destination="p07-kV-cQn" eventType="editingDidEnd" id="HGh-IN-awy"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UbQ-lV-lcW">
@@ -243,6 +244,7 @@
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="showTimeBeganEdit:" destination="p07-kV-cQn" eventType="editingDidBegin" id="XVW-QL-LfZ"/>
+                                    <action selector="showtimeEndEdit:" destination="p07-kV-cQn" eventType="editingDidEnd" id="Nu9-if-Enj"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xJH-WD-xRY">
@@ -252,6 +254,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
+                                    <action selector="rigDownEndEdit:" destination="p07-kV-cQn" eventType="editingDidEnd" id="lxD-HP-idZ"/>
                                     <action selector="rigDownTimeBeganEdit:" destination="p07-kV-cQn" eventType="editingDidBegin" id="4YP-08-G9o"/>
                                 </connections>
                             </textField>
@@ -294,6 +297,7 @@
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="soundcheckTimeBeganEdit:" destination="p07-kV-cQn" eventType="editingDidBegin" id="le9-Bd-zS2"/>
+                                    <action selector="soundcheckTimeEndEdit:" destination="p07-kV-cQn" eventType="editingDidEnd" id="Tiq-If-de8"/>
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Line Up Placement" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Jd-k0-dFp">
